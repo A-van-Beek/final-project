@@ -1,6 +1,7 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
-
+// gender      ENUM ('M','F')  NOT NULL, 
+//online: Boolean @default(value: 0)
 generator client {
   provider = "prisma-client-js"
 }
@@ -18,11 +19,16 @@ model User {
   phoneNumber    Int
   profilePicture String?
   bookings       Bookings[]
+  reviews       Reviews[]
 }
 
 model amenities {
   id   String @id @default(uuid())
   name String @unique
+
+  propertyId String
+  property Property @relation(fields: [propertyId], references: [id])
+  @@index([propertyId])
 }
 
 model Bookings {
@@ -31,17 +37,18 @@ model Bookings {
   //relations by id
   userId     String
   propertyId String
+  accommodationId String
 
   checkinDate    DateTime
   checkoutDate   DateTime
   numberOfGuests Int
-  totalPrice     Int
+  totalPrice     Decimal
   bookingStatus  String
 
   user     User     @relation(fields: [userId], references: [id])
   property Property @relation(fields: [propertyId], references: [id])
-
-  //indexes
+ 
+   //indexes
   @@index([userId])
   @@index([propertyId])
 
@@ -55,6 +62,8 @@ model Hosts {
   phoneNumber    Int
   profilePicture String
   aboutMe        String
+
+  property  Property[]
 }
 
 model Property {
@@ -62,13 +71,20 @@ model Property {
   title         String
   description   String
   location      String
-  pricePerNight Int
+  pricePerNight Decimal
   bedroomCount  Int
   bathRoomCount Int
   maxGuestCount Int
   hostId        String
   rating        Int
   bookings      Bookings[]
+  amenities     amenities[]
+  reviews       Reviews[]
+
+  landlordId    String
+  landlord Hosts @relation(fields: [landlordId], references: [id])
+  @@index([landlordId])
+
 }
 
 model Reviews {
@@ -77,4 +93,11 @@ model Reviews {
   propertyId String
   rating     Int
   comment    String
+
+  huisjeId    String
+  guestId     String
+  guest     User     @relation(fields: [guestId], references: [id])
+  property Property @relation(fields: [huisjeId], references: [id])
+  @@index([huisjeId])
+  @@index([userId])
 }

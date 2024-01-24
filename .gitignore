@@ -1,2 +1,5 @@
 node_modules
 .vscode
+
+# deze bevat password voor de database: dus niet meenemen !
+.env

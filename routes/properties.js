@@ -1,6 +1,6 @@
 import express from "express";
-import getUsers from "../services/users/getUsers.js";
-import getUserById from "../services/users/getUserById.js";
+import getProperties from "../services/properties/getProperties.js";
+import getPropertyById from "../services/properties/getPropertyById.js";
 import authMiddleware from "../middleware/auth.js";
 import notFoundErrorHandler from "../middleware/notFoundErrorHandler.js";
 
@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
   const {} = req.query;
-  const users = await getUsers();
+  const users = await getProperties();
   res.status(200).json(users);
 });
 
@@ -23,15 +23,15 @@ router.get("/", async (req, res) => {
 //   );
 //   res.status(201).json(newUser);
 // });
-// let op: nog aanpassen vanuit book !!
+
 router.get(
   "/:id",
   async (req, res, next) => {
     try {
       const { id } = req.params;
-      const user = await getUserById(id);
+      const property = await getPropertyById(id);
 
-      res.status(200).json(user);
+      res.status(200).json(property);
     } catch (error) {
       next(error);
     }

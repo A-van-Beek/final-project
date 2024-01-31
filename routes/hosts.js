@@ -1,6 +1,6 @@
 import express from "express";
-import getUsers from "../services/users/getUsers.js";
-import getUserById from "../services/users/getUserById.js";
+import getHosts from "../services/hosts/getHosts.js";
+import getHostById from "../services/hosts/getHostById.js";
 import authMiddleware from "../middleware/auth.js";
 import notFoundErrorHandler from "../middleware/notFoundErrorHandler.js";
 
@@ -8,8 +8,8 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
   const {} = req.query;
-  const users = await getUsers();
-  res.status(200).json(users);
+  const hosts = await getHosts();
+  res.status(200).json(hosts);
 });
 
 // router.post("/", authMiddleware, async (req, res) => {
@@ -29,9 +29,9 @@ router.get(
   async (req, res, next) => {
     try {
       const { id } = req.params;
-      const user = await getUserById(id);
+      const host = await getHostById(id);
 
-      res.status(200).json(user);
+      res.status(200).json(host);
     } catch (error) {
       next(error);
     }

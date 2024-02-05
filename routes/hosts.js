@@ -12,18 +12,28 @@ router.get("/", async (req, res) => {
   res.status(200).json(hosts);
 });
 
-// router.post("/", authMiddleware, async (req, res) => {
-//   const { title, author, isbn, pages, available, genre } = req.body;
-//   const newBook = await createUser(
-//     username,
-//     name,
-//     email,
-//     phoneNumber,
-//     profilePicture
-//   );
-//   res.status(201).json(newUser);
-// });
-// let op: nog aanpassen vanuit book !!
+router.post("/", authMiddleware, async (req, res) => {
+  const {
+    username,
+    password,
+    name,
+    email,
+    phoneNumber,
+    profilePicture,
+    aboutMe,
+  } = req.body;
+  const newHost = await createUser(
+    username,
+    password,
+    name,
+    email,
+    phoneNumber,
+    profilePicture,
+    aboutMe
+  );
+  res.status(201).json(newHost);
+});
+
 router.get(
   "/:id",
   async (req, res, next) => {

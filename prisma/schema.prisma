@@ -11,9 +11,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model amenities {
+model Amenities {
   id            String @id @default(uuid())
   name          String @unique
+
+  properties    Properties[]
 }
 
 model Bookings {
@@ -84,4 +86,5 @@ model Properties {
   rating        Int
   bookings      Bookings[]
   reviews       Reviews[]
+  amenities     Amenities[]
 }

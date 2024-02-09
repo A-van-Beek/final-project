@@ -1,0 +1,99 @@
+-- herschreven code tbv tabellen in postgres
+
+
+
+-- tabellen aanmaken
+-- Creëer de tabel voor amenities
+CREATE TABLE amenities (
+  id   BIGSERIAL PRIMARY KEY,
+  name VARCHAR(255) UNIQUE NOT NULL
+);
+
+-- Creëer de tabel voor Bookings
+CREATE TABLE Bookings (
+  id             BIGSERIAL PRIMARY KEY,
+  userId         BIGINT,
+  propertyId     BIGINT,
+  checkinDate    TIMESTAMP,
+  checkoutDate   TIMESTAMP,
+  numberOfGuests INT,
+  totalPrice     DECIMAL,
+  bookingStatus  VARCHAR(255)
+);
+
+-- Creëer de tabel voor Hosts
+CREATE TABLE Hosts (
+  id             BIGSERIAL PRIMARY KEY,
+  username       VARCHAR(255) UNIQUE NOT NULL,
+  password       VARCHAR(255) NOT NULL,
+  name           VARCHAR(255),
+  email          VARCHAR(255),
+  phoneNumber    VARCHAR(255),
+  profilePicture VARCHAR(255),
+  aboutMe        VARCHAR(255)
+);
+
+-- Creëer de tabel voor Users
+CREATE TABLE Users (
+  id             BIGSERIAL PRIMARY KEY,
+  username       VARCHAR(255) UNIQUE NOT NULL,
+  password       VARCHAR(255) NOT NULL,
+  name           VARCHAR(255),
+  email          VARCHAR(255),
+  phoneNumber    VARCHAR(255),
+  profilePicture VARCHAR(255)
+);
+
+-- Creëer de tabel voor Reviews
+CREATE TABLE Reviews (
+  id         BIGSERIAL PRIMARY KEY,
+  userId     BIGINT,
+  propertyId BIGINT,
+  rating     INT,
+  comment    VARCHAR(255)
+);
+
+-- Creëer de tabel voor Properties
+CREATE TABLE Properties (
+  id            BIGSERIAL PRIMARY KEY,
+  title         VARCHAR(255),
+  description   VARCHAR(255),
+  location      VARCHAR(255),
+  pricePerNight DECIMAL,
+  bedroomCount  INT,
+  bathRoomCount INT,
+  maxGuestCount INT,
+  hostId        BIGINT,
+  rating        INT
+);
+
+-- en alle koppelingen introduceren
+-- Voeg foreign key toe aan Bookings voor userId
+ALTER TABLE Bookings
+ADD CONSTRAINT fk_userId
+FOREIGN KEY (userId) REFERENCES Users(id);
+
+-- Voeg foreign key toe aan Bookings voor propertyId
+ALTER TABLE Bookings
+ADD CONSTRAINT fk_propertyId
+FOREIGN KEY (propertyId) REFERENCES Properties(id);
+
+-- Voeg foreign key toe aan Bookings voor userId
+ALTER TABLE Bookings
+ADD CONSTRAINT fk_userId
+FOREIGN KEY (userId) REFERENCES Users(id);
+
+
+-- Voeg foreign keys toe aan Reviews voor userId en propertyId
+ALTER TABLE Reviews
+ADD CONSTRAINT fk_userId
+FOREIGN KEY (userId) REFERENCES Users(id);
+
+ALTER TABLE Reviews
+ADD CONSTRAINT fk_propertyId
+FOREIGN KEY (propertyId) REFERENCES Properties(id);
+
+-- Voeg foreign key toe aan Properties voor hostId
+ALTER TABLE Properties
+ADD CONSTRAINT fk_hostId
+FOREIGN KEY (hostId) REFERENCES Hosts(id);

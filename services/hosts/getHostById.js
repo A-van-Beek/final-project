@@ -9,9 +9,9 @@ const getHostById = async (id) => {
     },
   });
 
-  // if (!host) {
-  //   throw new NotFoundError("Host", id);
-  // }
+  if (!host) {
+    throw new NotFoundError("Host", id);
+  }
 
   return host;
 };

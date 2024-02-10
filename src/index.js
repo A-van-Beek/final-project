@@ -10,6 +10,7 @@ import propertiesRouter from "../routes/properties.js";
 // import * as Sentry from "@sentry/node";
 
 const app = express();
+const port = 3333;
 
 app.use(express.json());
 app.use("/users", userRouter);
@@ -17,10 +18,19 @@ app.use("/hosts", hostsRouter);
 app.use("/properties", propertiesRouter);
 app.use("/login", loginRouter);
 
-app.get("/", (req, res) => {
-  res.send("Hello world! Welkom in mijn reiswereld");
+const logStuff = (req, res, next) => {
+  console.log(
+    `Protocol: ${req.protocol} \nHost: ${req.get("host")} \nURL: ${
+      req.originalUrl
+    }`
+  );
+  next();
+};
+
+app.get("/", logStuff, (req, res) => {
+  res.send("Welkom in de B&B wereld!");
 });
 
-app.listen(3333, () => {
-  console.log("Server is listening on port 3333");
+app.listen(port, () => {
+  console.log(`mijn B&B app listening at http://localhost:${port}`);
 });

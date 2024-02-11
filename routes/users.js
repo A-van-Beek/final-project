@@ -3,6 +3,7 @@ import getUsers from "../services/users/getUsers.js";
 import getUserById from "../services/users/getUserById.js";
 import createUser from "../services/users/createUser.js";
 import updateUserById from "../services/users/updateUserById.js";
+import deleteUserById from "../services/users/deleteUserById.js";
 import authMiddleware from "../middleware/auth.js";
 import notFoundErrorHandler from "../middleware/notFoundErrorHandler.js";
 
@@ -80,22 +81,22 @@ router.put(
   notFoundErrorHandler
 );
 
-// router.delete(
-//   "/:id",
-//   authMiddleware,
-//   async (req, res, next) => {
-//     try {
-//       const { id } = req.params;
-//       const deletedBookId = await deleteBook(id);
+router.delete(
+  "/:id",
+  authMiddleware,
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const deletedUserId = await deleteUserById(id);
 
-//       res.status(200).json({
-//         message: `Book with id ${deletedBookId} was deleted!`,
-//       });
-//     } catch (error) {
-//       next(error);
-//     }
-//   },
-//   notFoundErrorHandler
-// );
+      res.status(200).json({
+        message: `User met id ${deletedUserId} is verwijderd !`,
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+  notFoundErrorHandler
+);
 
 export default router;

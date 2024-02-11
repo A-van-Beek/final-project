@@ -1,19 +1,19 @@
 import { PrismaClient } from "@prisma/client";
 import NotFoundError from "../../errors/NotFoundError.js";
 
-const getUserById = async (id) => {
+const deleteUser = async (id) => {
   const prisma = new PrismaClient();
-  const user = await prisma.users.findUnique({
+
+  const deleteUser = await prisma.users.deleteMany({
     where: {
       id,
     },
   });
 
-  if (!user) {
+  if (!deleteUser || deleteUser.count === 0) {
     throw new NotFoundError("User", id);
   }
 
-  return user;
+  return id;
 };
-
-export default getUserById;
+export default deleteUser;

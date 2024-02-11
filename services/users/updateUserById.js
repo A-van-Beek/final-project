@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-// import notFoundErrorHandler from "../middleware/notFoundErrorHandler.js";
+import NotFoundError from "../../errors/NotFoundError.js";
 
 const updateUserById = async (
   id,

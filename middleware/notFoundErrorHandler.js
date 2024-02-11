@@ -1,9 +1,9 @@
 const notFoundErrorHandler = (err, req, res, next) => {
-  if (err.name === 'NotFoundError') {
-    return res.status(404).json({ message: err.message })
+  if (err.name === "NotFoundError") {
+    return res.status(404).json({ message: err.message });
   }
 
-  next(err)
-}
+  next(err);
+};
 
-export default notFoundErrorHandler
+export default notFoundErrorHandler;

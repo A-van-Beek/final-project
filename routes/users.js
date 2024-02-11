@@ -2,6 +2,7 @@ import express from "express";
 import getUsers from "../services/users/getUsers.js";
 import getUserById from "../services/users/getUserById.js";
 import createUser from "../services/users/createUser.js";
+import updateUserById from "../services/users/updateUserById.js";
 import authMiddleware from "../middleware/auth.js";
 import notFoundErrorHandler from "../middleware/notFoundErrorHandler.js";
 
@@ -54,29 +55,30 @@ router.get(
   notFoundErrorHandler
 );
 
-// router.put(
-//   "/:id",
-//   authMiddleware,
-//   async (req, res, next) => {
-//     try {
-//       const { id } = req.params;
-//       const { title, author, isbn, pages, available, genre } = req.body;
-//       const updatedBook = await updateBookById(
-//         id,
-//         title,
-//         author,
-//         isbn,
-//         pages,
-//         available,
-//         genre
-//       );
-//       res.status(200).json(updatedBook);
-//     } catch (error) {
-//       next(error);
-//     }
-//   },
-//   notFoundErrorHandler
-// );
+router.put(
+  "/:id",
+  authMiddleware,
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const { username, password, name, email, phoneNumber, profilePicture } =
+        req.body;
+      const updatedUser = await updateUserById(
+        id,
+        username,
+        password,
+        name,
+        email,
+        phoneNumber,
+        profilePicture
+      );
+      res.status(200).json(updatedUser);
+    } catch (error) {
+      next(error);
+    }
+  },
+  notFoundErrorHandler
+);
 
 // router.delete(
 //   "/:id",

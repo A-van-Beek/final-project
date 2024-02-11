@@ -8,13 +8,11 @@ import propertiesRouter from "../routes/properties.js";
 // import log from "./middleware/logMiddleware.js";
 // import errorHandler from "./middleware/errorHandler.js";
 // import * as Sentry from "@sentry/node";
-// import jwtCheck from "./middleware/jwtCheck.js";     //probeersel van Mona?
 
 const app = express();
 const port = 3333;
 
 app.use(express.json());
-// app.use(jwtCheck);     //probeersel van Mona?
 app.use("/users", userRouter);
 app.use("/hosts", hostsRouter);
 app.use("/properties", propertiesRouter);

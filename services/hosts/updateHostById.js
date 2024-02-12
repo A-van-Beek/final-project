@@ -12,7 +12,7 @@ const updateHostById = async (
   aboutMe
 ) => {
   const prisma = new PrismaClient();
-  const updatedHost = await prisma.hosts.updateMany({
+  const updateHost = await prisma.hosts.updateMany({
     where: {
       id,
     },
@@ -27,7 +27,7 @@ const updateHostById = async (
     },
   });
 
-  if (!updatedHost || updatedHost.count === 0) {
+  if (!updateHost || updateHost.count === 0) {
     throw new NotFoundError("User", id);
   }
 

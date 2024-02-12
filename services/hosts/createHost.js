@@ -10,7 +10,7 @@ const createHost = async (
   aboutMe
 ) => {
   const prisma = new PrismaClient();
-  const user = await prisma.users.create({
+  const host = await prisma.hosts.create({
     data: {
       username,
       password,
@@ -22,7 +22,7 @@ const createHost = async (
     },
   });
 
-  return user;
+  return host;
 };
 
 export default createHost;

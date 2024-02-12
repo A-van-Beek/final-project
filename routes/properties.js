@@ -1,6 +1,10 @@
 import express from "express";
 import getProperties from "../services/properties/getProperties.js";
 import getPropertyById from "../services/properties/getPropertyById.js";
+import createProperty from "../services/properties/createProperty.js";
+import deletePropertyById from "../services/properties/deletePropertyById.js";
+import updatePropertyById from "../services/properties/updatePropertyById.js";
+
 import authMiddleware from "../middleware/auth.js";
 import notFoundErrorHandler from "../middleware/notFoundErrorHandler.js";
 
@@ -12,17 +16,35 @@ router.get("/", async (req, res) => {
   res.status(200).json(users);
 });
 
-// router.post("/", authMiddleware, async (req, res) => {
-//   const { title, author, isbn, pages, available, genre } = req.body;
-//   const newBook = await createUser(
-//     username,
-//     name,
-//     email,
-//     phoneNumber,
-//     profilePicture
-//   );
-//   res.status(201).json(newUser);
-// });
+router.post("/", authMiddleware, async (req, res, next) => {
+  try {
+    const {
+      title,
+      description,
+      location,
+      pricePerNight,
+      bedroomCount,
+      bathRoomCount,
+      maxGuestCount,
+      hostId,
+      rating,
+    } = req.body;
+    const newProperty = await createProperty(
+      title,
+      description,
+      location,
+      pricePerNight,
+      bedroomCount,
+      bathRoomCount,
+      maxGuestCount,
+      hostId,
+      rating
+    );
+    res.status(201).json(newProperty);
+  } catch (error) {
+    next(error);
+  }
+});
 
 router.get(
   "/:id",
@@ -39,46 +61,58 @@ router.get(
   notFoundErrorHandler
 );
 
-// router.put(
-//   "/:id",
-//   authMiddleware,
-//   async (req, res, next) => {
-//     try {
-//       const { id } = req.params;
-//       const { title, author, isbn, pages, available, genre } = req.body;
-//       const updatedBook = await updateBookById(
-//         id,
-//         title,
-//         author,
-//         isbn,
-//         pages,
-//         available,
-//         genre
-//       );
-//       res.status(200).json(updatedBook);
-//     } catch (error) {
-//       next(error);
-//     }
-//   },
-//   notFoundErrorHandler
-// );
+router.put(
+  "/:id",
+  authMiddleware,
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const {
+        title,
+        description,
+        location,
+        pricePerNight,
+        bedroomCount,
+        bathRoomCount,
+        maxGuestCount,
+        hostId,
+        rating,
+      } = req.body;
+      const updatedProperty = await updatePropertyById(
+        id,
+        description,
+        location,
+        pricePerNight,
+        bedroomCount,
+        bathRoomCount,
+        maxGuestCount,
+        hostId,
+        rating
+      );
+      res.status(200).json(updatedProperty);
+    } catch (error) {
+      next(error);
+    }
+  },
+  notFoundErrorHandler
+);
 
-// router.delete(
-//   "/:id",
-//   authMiddleware,
-//   async (req, res, next) => {
-//     try {
-//       const { id } = req.params;
-//       const deletedBookId = await deleteBook(id);
+router.delete(
+  "/:id",
+  authMiddleware,
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const deletedPropertyId = await deletePropertyById(id);
 
-//       res.status(200).json({
-//         message: `Book with id ${deletedBookId} was deleted!`,
-//       });
-//     } catch (error) {
-//       next(error);
-//     }
-//   },
-//   notFoundErrorHandler
-// );
+      res.status(200).json({
+        message: `Property met id ${deletedPropertyId} is verwijderd !`,
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+  notFoundErrorHandler
+);
 
 export default router;

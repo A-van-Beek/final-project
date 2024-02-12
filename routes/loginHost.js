@@ -1,10 +1,10 @@
 import { Router } from "express";
 import jwt from "jsonwebtoken";
-import getUsers from "../services/users/getUsers.js";
+import getHosts from "../services/hosts/getHosts.js";
 
 const router = Router();
 const secretKey = process.env.AUTH_SECRET_KEY || "my-secret-key";
-
+// login hosts
 router.post("/", async (req, res) => {
   try {
     const { username, password } = req.body;
@@ -17,21 +17,23 @@ router.post("/", async (req, res) => {
     }
 
     // Dynamische import voor userData
-    const users = await getUsers();
+    const hosts = await getHosts();
 
     //// Controleren of de import gelukt is. Dit werkt...
     // console.log("Users from import:", users);
 
-    const user = users.find(
-      (u) => u.username === username && u.password === password
+    const host = hosts.find(
+      (h) => h.username === username && h.password === password
     );
 
-    if (!user) {
-      return res.status(401).json({ message: "Invalid credentials!" });
+    if (!host) {
+      return res
+        .status(401)
+        .json({ message: "Invalid credentials van de host !" });
     }
 
-    const token = generateToken(user.id);
-    res.status(200).json({ message: "Succesvol ingelogd !", token });
+    const token = generateToken(host.id);
+    res.status(200).json({ message: "Host is succesvol ingelogd !", token });
   } catch (error) {
     console.error("Fout tijdens login:", error);
     res.status(500).json({ message: "Internal Server Error" });

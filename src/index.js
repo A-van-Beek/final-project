@@ -4,6 +4,7 @@ import "dotenv/config";
 import userRouter from "../routes/users.js";
 import hostsRouter from "../routes/hosts.js";
 import loginRouter from "../routes/login.js";
+import loginHostRouter from "../routes/loginHost.js";
 import propertiesRouter from "../routes/properties.js";
 // import log from "./middleware/logMiddleware.js";
 // import errorHandler from "./middleware/errorHandler.js";
@@ -17,6 +18,7 @@ app.use("/users", userRouter);
 app.use("/hosts", hostsRouter);
 app.use("/properties", propertiesRouter);
 app.use("/login", loginRouter);
+app.use("/loginHost", loginHostRouter);
 
 const logStuff = (req, res, next) => {
   console.log(

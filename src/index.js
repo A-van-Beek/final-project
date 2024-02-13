@@ -6,6 +6,9 @@ import hostsRouter from "../routes/hosts.js";
 import loginRouter from "../routes/login.js";
 import loginHostRouter from "../routes/loginHost.js";
 import propertiesRouter from "../routes/properties.js";
+import amenitiesRouter from "../routes/amenities.js";
+import bookingsRouter from "../routes/bookings.js";
+import reviewRouter from "../routes/reviews.js";
 // import log from "./middleware/logMiddleware.js";
 // import errorHandler from "./middleware/errorHandler.js";
 // import * as Sentry from "@sentry/node";
@@ -19,6 +22,9 @@ app.use("/hosts", hostsRouter);
 app.use("/properties", propertiesRouter);
 app.use("/login", loginRouter);
 app.use("/loginHost", loginHostRouter);
+app.use("/amenities", amenitiesRouter);
+app.use("/bookings", bookingsRouter);
+app.use("/reviews", reviewRouter);
 
 const logStuff = (req, res, next) => {
   console.log(

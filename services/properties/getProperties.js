@@ -25,6 +25,7 @@ const getProperties = async (
       maxGuestCount,
       hostId,
       rating,
+      amenities,
     },
     include: { amenities: true },
   });

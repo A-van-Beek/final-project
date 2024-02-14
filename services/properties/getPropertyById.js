@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-// import NotFoundError from "../../middleware/notFoundErrorHandler";
+import NotFoundError from "../../middleware/notFoundErrorHandler";
 
 const getPropertyById = async (id) => {
   const prisma = new PrismaClient();
@@ -9,9 +9,9 @@ const getPropertyById = async (id) => {
     },
   });
 
-  // if (!host) {
-  //   throw new NotFoundError("Host", id);
-  // }
+  if (!property) {
+    throw new NotFoundError("Property", id);
+  }
 
   return property;
 };

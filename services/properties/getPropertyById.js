@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import NotFoundError from "../../middleware/notFoundErrorHandler";
+import NotFoundError from "../../errors/NotFoundError.js";
 
 const getPropertyById = async (id) => {
   const prisma = new PrismaClient();

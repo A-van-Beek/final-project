@@ -5,6 +5,7 @@ import getUserById from "../services/users/getUserById.js";
 import createUser from "../services/users/createUser.js";
 import updateUserById from "../services/users/updateUserById.js";
 import deleteUserById from "../services/users/deleteUserById.js";
+import getUserBookings from "../services/users/getUserBookings.js";
 
 import authMiddleware from "../middleware/auth.js";
 import notFoundErrorHandler from "../middleware/notFoundErrorHandler.js";
@@ -94,6 +95,22 @@ router.delete(
       res.status(200).json({
         message: `User met id ${deletedUserId} is verwijderd !`,
       });
+    } catch (error) {
+      next(error);
+    }
+  },
+  notFoundErrorHandler
+);
+
+router.get(
+  "/:id/bookings",
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      console.log("gevonden " & id);
+      const userBookings = await getUserBookings(id);
+
+      res.status(200).json(userBookings);
     } catch (error) {
       next(error);
     }

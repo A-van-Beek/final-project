@@ -13,8 +13,8 @@ const router = express.Router();
 
 router.get("/", async (req, res, next) => {
   try {
-    const {} = req.query;
-    const bookings = await getBookings();
+    const { userId } = req.query;
+    const bookings = await getBookings(userId);
     res.json(bookings);
   } catch (error) {
     next(error);

@@ -13,8 +13,8 @@ const router = express.Router();
 
 router.get("/", async (req, res, next) => {
   try {
-    const { hostname, email } = req.query;
-    const hosts = await getHosts(hostname, email);
+    const { name, hostname, email } = req.query;
+    const hosts = await getHosts(name, hostname, email);
     res.json(hosts);
   } catch (error) {
     next(error);

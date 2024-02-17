@@ -23,7 +23,7 @@ router.get("/", async (req, res) => {
     rating,
     amenities,
   } = req.query;
-  const users = await getProperties(
+  const properties = await getProperties(
     title,
     description,
     location,
@@ -35,7 +35,7 @@ router.get("/", async (req, res) => {
     rating,
     amenities
   );
-  res.status(200).json(users);
+  res.status(200).json(properties);
 });
 
 router.post("/", authMiddleware, async (req, res, next) => {

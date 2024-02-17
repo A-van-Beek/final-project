@@ -1,5 +1,4 @@
 import { PrismaClient } from "@prisma/client";
-import NotFoundError from "../../errors/NotFoundError.js";
 
 const getProperties = async (
   title,
@@ -14,7 +13,7 @@ const getProperties = async (
   amenities
 ) => {
   const prisma = new PrismaClient();
-  return prisma.properties.findMany({
+  const getProperties = await prisma.properties.findMany({
     where: {
       title,
       description,
@@ -33,6 +32,11 @@ const getProperties = async (
     },
     include: { amenities: true },
   });
+  if (getProperties.length === 0) {
+    console.log("geen resultaat !");
+  }
+
+  return getProperties;
 };
 
 export default getProperties;

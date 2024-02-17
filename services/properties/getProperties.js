@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import NotFoundError from "../../errors/NotFoundError.js";
 
 const getProperties = async (
   title,
@@ -13,7 +14,6 @@ const getProperties = async (
   amenities
 ) => {
   const prisma = new PrismaClient();
-
   return prisma.properties.findMany({
     where: {
       title,
@@ -25,7 +25,11 @@ const getProperties = async (
       maxGuestCount,
       hostId,
       rating,
-      amenities,
+      amenities: {
+        some: {
+          name: { equals: amenities },
+        },
+      },
     },
     include: { amenities: true },
   });

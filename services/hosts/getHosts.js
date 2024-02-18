@@ -1,16 +1,23 @@
 import { PrismaClient } from "@prisma/client";
 import NotFoundError from "../../errors/NotFoundError.js";
+import NoResultError from "../../errors/NoResultError.js";
 
-const getHosts = async (name) => {
+const getHosts = async (
+  username,
+  name,
+  email,
+  phoneNumber,
+  profilePicture,
+  aboutMe
+) => {
   const prisma = new PrismaClient();
-  console.log(name);
   const host = await prisma.hosts.findMany({
-    where: { name },
+    where: { username, name, email, phoneNumber, profilePicture, aboutMe },
   });
 
   //findmany geeft een array !
   if (host.length === 0) {
-    throw new NotFoundError("Host", name);
+    throw new NoResultError("Hosts:");
   }
 
   return host;

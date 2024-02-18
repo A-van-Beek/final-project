@@ -1,6 +1,7 @@
 const errorHandler = (err, req, res, next) => {
-  console.error(err)
-  res.status(500).json({ message: 'Something went wrong!' })
-}
+  //algemene errorHandler
+  console.error("Handling generic error:", err);
+  res.status(500).json({ message: "Interne serverfout !" });
+};
 
-export default errorHandler
+export default errorHandler;

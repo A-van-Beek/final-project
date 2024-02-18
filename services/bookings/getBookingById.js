@@ -5,7 +5,7 @@ const getBookingById = async (id) => {
   const prisma = new PrismaClient();
   const booking = await prisma.bookings.findUnique({
     where: {
-      userId: id,
+      id,
     },
   });
 

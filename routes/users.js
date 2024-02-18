@@ -14,8 +14,14 @@ const router = express.Router();
 
 router.get("/", async (req, res, next) => {
   try {
-    const { username, email } = req.query;
-    const users = await getUsers(username, email);
+    const { username, name, email, phoneNumber, profilePicture } = req.query;
+    const users = await getUsers(
+      username,
+      name,
+      email,
+      phoneNumber,
+      profilePicture
+    );
     res.json(users);
   } catch (error) {
     next(error);

@@ -10,6 +10,8 @@ const getProperties = async (
   maxGuestCount,
   hostId,
   rating,
+  bookings,
+  reviews,
   amenities
 ) => {
   const prisma = new PrismaClient();
@@ -24,13 +26,12 @@ const getProperties = async (
       maxGuestCount,
       hostId,
       rating,
-      amenities: {
-        some: {
-          name: { equals: amenities },
-        },
-      },
     },
-    include: { amenities: true },
+    include: {
+      bookings: true,
+      reviews: true,
+      amenities: true,
+    },
   });
   if (getProperties.length === 0) {
     console.log("geen resultaat !");

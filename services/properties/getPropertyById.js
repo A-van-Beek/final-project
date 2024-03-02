@@ -7,7 +7,11 @@ const getPropertyById = async (id) => {
     where: {
       id,
     },
-    include: { amenities: true },
+    include: {
+      bookings: true,
+      reviews: true,
+      amenities: true,
+    },
   });
 
   if (!property) {

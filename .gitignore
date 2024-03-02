@@ -3,3 +3,5 @@ node_modules
 
 # deze bevat password voor de database: dus niet meenemen !
 .env
+
+ReadMeToDo.md

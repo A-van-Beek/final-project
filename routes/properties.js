@@ -21,6 +21,8 @@ router.get("/", async (req, res) => {
     maxGuestCount,
     hostId,
     rating,
+    bookings,
+    reviews,
     amenities,
   } = req.query;
   const properties = await getProperties(
@@ -33,6 +35,8 @@ router.get("/", async (req, res) => {
     maxGuestCount,
     hostId,
     rating,
+    bookings,
+    reviews,
     amenities
   );
   res.status(200).json(properties);

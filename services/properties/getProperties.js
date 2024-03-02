@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { extractRequestData } from "@sentry/node";
 
 const getProperties = async (
   title,
@@ -26,6 +27,27 @@ const getProperties = async (
       maxGuestCount,
       hostId,
       rating,
+      bookings: bookings
+        ? {
+            some: {
+              id: { equals: bookings },
+            },
+          }
+        : undefined,
+      reviews: reviews
+        ? {
+            some: {
+              id: { equals: reviews },
+            },
+          }
+        : undefined,
+      amenities: amenities
+        ? {
+            some: {
+              name: { equals: amenities },
+            },
+          }
+        : undefined,
     },
     include: {
       bookings: true,

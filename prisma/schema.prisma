@@ -28,8 +28,8 @@ model Bookings {
   totalPrice     Decimal
   bookingStatus  String?  //status voorlopig niet verplicht
 
-  users     Users     @relation(fields: [userId], references: [id])
-  properties Properties @relation(fields: [propertyId], references: [id])
+  users     Users     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  properties Properties @relation(fields: [propertyId], references: [id], onDelete: Cascade)
  
    //indexes
   @@index([userId])
@@ -45,6 +45,7 @@ model Hosts {
   phoneNumber    String
   profilePicture String
   aboutMe        String
+  properties  Properties[]
 }
 
 model Users {
@@ -66,8 +67,8 @@ model Reviews {
   rating     Int
   comment    String
 
-  users    Users @relation(fields: [userId], references: [id])
-  properties  Properties  @relation(fields: [propertyId], references: [id])
+  users    Users @relation(fields: [userId], references: [id], onDelete: Cascade)
+  properties  Properties  @relation(fields: [propertyId], references: [id], onDelete: Cascade)
 
   @@index([userId])
   @@index([propertyId])
@@ -87,4 +88,6 @@ model Properties {
   bookings      Bookings[]
   reviews       Reviews[]
   amenities     Amenities[]
+
+  hosts Hosts @relation(fields: [hostId], references: [id], onDelete: Cascade)
 }

@@ -60,7 +60,6 @@ app.use(Sentry.Handlers.errorHandler());
 //test error
 app.get("/debug-sentry", function mainHandler(req, res) {
   throw new Error("My first Sentry error!");
-  console.log("rest");
 });
 
 // Voeg de algemene errorHandler toe (optioneel)
